@@ -58,12 +58,26 @@ rightWall.receiveShadow = true;
 frontWall.receiveShadow = true;
 
 // Add a window
-const windowGeometry = new THREE.PlaneGeometry(3, 3);
-const windowMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 });
+const windowGeometry = new THREE.PlaneGeometry(5, 2);
+const windowMaterial = new THREE.MeshBasicMaterial({ color: 0xA3A3A3 });
 const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-windowMesh.position.set(0, 3.5, 5);
-windowMesh.rotation.y = Math.PI / 2;
+windowMesh.position.set(0, 3, -2.5);
 scene.add(windowMesh);
+
+// Add a window on the right wall
+const rwindowWidth = 3; // Width of the window
+const rwindowHeight = 3; // Height of the window
+const rwindowGeometry = new THREE.PlaneGeometry(rwindowWidth, rwindowHeight);
+const rwindowMaterial = new THREE.MeshBasicMaterial({ color: 0xA3A3A3 });
+const rwindowMesh = new THREE.Mesh(rwindowGeometry, rwindowMaterial);
+rwindowMesh.position.x = 5;
+rwindowMesh.rotation.y = -Math.PI / 2;
+
+// Position the window
+rwindowMesh.position.set(4, 2, 0); // Adjust x-coordinate to place the window on the right wall
+scene.add(rwindowMesh);
+
+
 
 // Add a bed
 const bedGeometry = new THREE.BoxGeometry(2, 0.5, 3);
@@ -95,25 +109,19 @@ scene.add(sheets);
 // Define the pillow parameters
 const pillowRadius = 0.3; // Adjust the radius of the pillow
 const pillowSegments = 32; // Number of segments for smoother curvature
-
 // Create the pillow geometry
 const pillowGeometry = new THREE.SphereGeometry(pillowRadius, pillowSegments, pillowSegments);
-
 // Create the material for the pillows
 const pillowMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff }); // White color for pillows
-
 // Create the pillow mesh
 const pillow1 = new THREE.Mesh(pillowGeometry, pillowMaterial);
 const pillow2 = new THREE.Mesh(pillowGeometry, pillowMaterial);
-
 // Position the pillows
 pillow1.position.set(-0.4, 0.72, -2); // Position first pillow
 pillow2.position.set(0.4, 0.72, -2); // Position second pillow
-
 // Scale the pillows to adjust their shape
 pillow1.scale.set(0.7, 0.4, 0.8); // Adjust the scale as needed to shape the pillow
 pillow2.scale.set(0.7, 0.4, 0.8); // Adjust the scale as needed to shape the pillow
-
 // Add the pillows to the scene
 scene.add(pillow1);
 scene.add(pillow2);
@@ -130,11 +138,44 @@ scene.add(carpet);
 
 
 // Add a chair
-const chairGeometry = new THREE.BoxGeometry(1, 1, 1);
-const chairMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
-const chair = new THREE.Mesh(chairGeometry, chairMaterial);
-chair.position.set(3, 0.5, -2);
-scene.add(chair);
+const chairGeometry = new THREE.BoxGeometry(1, 0.1, 1.5); // Seat
+const chairMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 }); // Brown color
+const chairSeat = new THREE.Mesh(chairGeometry, chairMaterial);
+chairSeat.position.set(3, 0.9, -2);
+scene.add(chairSeat);
+//chair backrest
+const backrestGeometry = new THREE.BoxGeometry(1, 1, 0.1); // Adjust dimensions as needed
+const backrestMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 }); // Brown color
+const backrest = new THREE.Mesh(backrestGeometry, backrestMaterial);
+backrest.position.set(3, 1.4, -2.6); // Adjust position to attach to the seat
+scene.add(backrest);
+//chair legs
+const legGeometry = new THREE.BoxGeometry(0.1, 1, 0.1); // Adjust dimensions as needed
+const legMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 }); // Brown color
+const frontLeftLeg = new THREE.Mesh(legGeometry, legMaterial);
+frontLeftLeg.position.set(3 - 0.45, 0.5, -1.9 - 0.65); // Adjust position to attach to the seat
+scene.add(frontLeftLeg);
+const frontRightLeg = new THREE.Mesh(legGeometry, legMaterial);
+frontRightLeg.position.set(3 + 0.45, 0.5, -1.9 - 0.65); // Adjust position to attach to the seat
+scene.add(frontRightLeg);
+const backLeftLeg = new THREE.Mesh(legGeometry, legMaterial);
+backLeftLeg.position.set(3 - 0.45, 0.5, -1.9 + 0.65); // Adjust position to attach to the seat
+scene.add(backLeftLeg);
+const backRightLeg = new THREE.Mesh(legGeometry, legMaterial);
+backRightLeg.position.set(3 + 0.45, 0.5, -1.9 + 0.65); // Adjust position to attach to the seat
+scene.add(backRightLeg);
+
+
+//table
+const tableWidth = 1.5;
+const tableHeight = 1.1;
+const tableLength = 2.5;
+const tableGeometry = new THREE.BoxGeometry(tableWidth, tableHeight, tableLength);
+const tableMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 });
+const table = new THREE.Mesh(tableGeometry, tableMaterial);
+table.position.set(-4, 0.5, -1);
+scene.add(table);
+
 
 // Render loop
 function animate() {
@@ -144,4 +185,4 @@ function animate() {
 animate();
 
 
-//I used GPT for the bed pillows and the frame thing.
+//I used GPT for the bed pillows and the chair frame thing.
